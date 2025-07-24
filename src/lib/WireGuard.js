@@ -119,16 +119,15 @@ PreUp = ${WG_PRE_UP}
 PostUp = ${WG_POST_UP}
 PreDown = ${WG_PRE_DOWN}
 PostDown = ${WG_POST_DOWN}
-Jc = ${config.server.jc}
-Jmin = ${config.server.jmin}
-Jmax = ${config.server.jmax}
-S1 = ${config.server.s1}
-S2 = ${config.server.s2}
-H1 = ${config.server.h1}
-H2 = ${config.server.h2}
-H3 = ${config.server.h3}
-H4 = ${config.server.h4}
-Jc = ${config.server.jc}
+Jc = 4
+Jmin = 10
+Jmax = 50
+S1 = 22
+S2 = 149
+H1 = 332363164
+H2 = 1358474496
+H3 = 391236897
+H4 = 1240403174
 `;
 
     for (const [clientId, client] of Object.entries(config.clients)) {
