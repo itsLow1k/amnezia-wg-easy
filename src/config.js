@@ -47,19 +47,24 @@ module.exports.PROMETHEUS_METRICS_PASSWORD = process.env.PROMETHEUS_METRICS_PASS
 module.exports.DICEBEAR_TYPE = process.env.DICEBEAR_TYPE || false;
 module.exports.USE_GRAVATAR = process.env.USE_GRAVATAR || false;
 
-const getRandomInt = (min, max) => min + Math.floor(Math.random() * (max - min));
-const getRandomJunkSize = () => getRandomInt(15, 150);
-const getRandomHeader = () => getRandomInt(1, 2_147_483_647);
+const crypto = require('crypto');
+
+function getRandomInt(min, max) {
+  return crypto.randomInt(min, max + 1);
+}
+
+function getRandomUint32() {
+  return crypto.randomBytes(4).readUInt32LE(0);
+}
 
 module.exports.JC = parseInt(process.env.JC, 10) || 4;
-module.exports.JMIN = parseInt(process.env.JMIN, 10) || 10;
-module.exports.JMAX = parseInt(process.env.JMAX, 10) || 50;
+module.exports.JMIN = parseInt(process.env.JMIN, 10) || getRandomInt(5, 20);
+module.exports.JMAX = parseInt(process.env.JMAX, 10) || getRandomInt(30, 100);
 
-module.exports.S1 = parseInt(process.env.S1, 10) || 22;
-module.exports.S2 = parseInt(process.env.S2, 10) || 149;
+module.exports.S1 = parseInt(process.env.S1, 10) || getRandomInt(1, 9999);
+module.exports.S2 = parseInt(process.env.S2, 10) || getRandomInt(1, 9999);
 
-module.exports.H1 = parseInt(process.env.H1, 10) || 332363164;
-module.exports.H2 = parseInt(process.env.H2, 10) || 1358474496;
-module.exports.H3 = parseInt(process.env.H3, 10) || 391236897;
-module.exports.H4 = parseInt(process.env.H4, 10) || 1240403174;
-
+module.exports.H1 = parseInt(process.env.H1, 10) || getRandomUint32();
+module.exports.H2 = parseInt(process.env.H2, 10) || getRandomUint32();
+module.exports.H3 = parseInt(process.env.H3, 10) || getRandomUint32();
+module.exports.H4 = parseInt(process.env.H4, 10) || getRandomUint32();
