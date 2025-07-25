@@ -51,12 +51,15 @@ const getRandomInt = (min, max) => min + Math.floor(Math.random() * (max - min))
 const getRandomJunkSize = () => getRandomInt(15, 150);
 const getRandomHeader = () => getRandomInt(1, 2_147_483_647);
 
-module.exports.JC = 4;
-module.exports.JMIN = 10;
-module.exports.JMAX = 50;
-module.exports.S1 = 22;
-module.exports.S2 = 149;
-module.exports.H1 = 332363164;
-module.exports.H2 = 1358474496;
-module.exports.H3 = 391236897;
-module.exports.H4 = 1240403174;
+module.exports.JC = parseInt(process.env.JC, 10) || 4;
+module.exports.JMIN = parseInt(process.env.JMIN, 10) || 10;
+module.exports.JMAX = parseInt(process.env.JMAX, 10) || 50;
+
+module.exports.S1 = parseInt(process.env.S1, 10) || 22;
+module.exports.S2 = parseInt(process.env.S2, 10) || 149;
+
+module.exports.H1 = parseInt(process.env.H1, 10) || 332363164;
+module.exports.H2 = parseInt(process.env.H2, 10) || 1358474496;
+module.exports.H3 = parseInt(process.env.H3, 10) || 391236897;
+module.exports.H4 = parseInt(process.env.H4, 10) || 1240403174;
+
