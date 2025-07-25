@@ -4,20 +4,20 @@ on:
   workflow_dispatch:
   push:
     branches:
-      - production
+      - master
 
 jobs:
   deploy:
     name: Build & Deploy
     runs-on: ubuntu-latest
-    if: github.repository_owner == 'spcfox'
+    if: github.repository_owner == 'w0rng'
     permissions:
       packages: write
       contents: read
     steps:
     - uses: actions/checkout@v4
       with:
-        ref: production
+        ref: master
 
     - name: Set up QEMU
       uses: docker/setup-qemu-action@v3
@@ -33,11 +33,11 @@ jobs:
         password: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Set environment variables
-      run: echo RELEASE=$(cat ./src/package.json | jq -r .release) >> $GITHUB_ENV
+      run: echo RELEASE=$(cat ./src/package.json | jq -r .release | jq -r .version) >> $GITHUB_ENV
 
     - name: Build & Publish Docker Image
       uses: docker/build-push-action@v6
       with:
         push: true
         platforms: linux/amd64,linux/arm/v6,linux/arm/v7,linux/arm64/v8
-        tags: ghcr.io/spcfox/amnezia-wg-easy:latest, ghcr.io/spcfox/amnezia-wg-easy:${{ env.RELEASE }}
+        tags: ghcr.io/w0rng/amnezia-wg-easy:latest, ghcr.io/w0rng/amnezia-wg-easy:${{ env.RELEASE }}
