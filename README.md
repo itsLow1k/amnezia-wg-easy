@@ -137,3 +137,6 @@ And then run the `docker run -d \ ...` command above again.
 
 Based on [wg-easy](https://github.com/wg-easy/wg-easy) by Emile Nijssen.  
 Use integrations with AmneziaWg from [amnezia-wg-easy](https://github.com/w0rng/amnezia-wg-easy) by w0rng.
+
+##PS.
+"Проект предназначен для изучения технологий шифрования. Не используйте код для обхода блокировок, нарушающих законодательство РФ".
