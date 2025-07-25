@@ -41,28 +41,39 @@ module.exports = class WireGuard {
 
   async __buildConfig() {
     this.__configPromise = Promise.resolve().then(async () => {
-      if (!WG_HOST) {
-        throw new Error('WG_HOST Environment Variable Not Set!');
-      }
+      if (!WG_HOST) throw new Error('WG_HOST Environment Variable Not Set!');
 
       debug('Loading configuration...');
       let config;
       try {
+        // Загрузка существующей конфигурации
         config = await fs.readFile(path.join(WG_PATH, 'wg0.json'), 'utf8');
         config = JSON.parse(config);
         debug('Configuration loaded.');
+
+        // Важное обновление: синхронизация параметров сервера с переменными окружения
+        config.server = {
+          ...config.server,
+          jc: JC,
+          jmin: JMIN,
+          jmax: JMAX,
+          s1: S1,
+          s2: S2,
+          h1: H1,
+          h2: H2,
+          h3: H3,
+          h4: H4
+        };
       } catch (err) {
+        // Создание новой конфигурации
         const privateKey = await Util.exec('wg genkey');
-        const publicKey = await Util.exec(`echo ${privateKey} | wg pubkey`, {
-          log: 'echo ***hidden*** | wg pubkey',
-        });
-        const address = WG_DEFAULT_ADDRESS.replace('x', '1');
+        const publicKey = await Util.exec(`echo ${privateKey} | wg pubkey`, { log: 'echo ***hidden*** | wg pubkey' });
 
         config = {
           server: {
             privateKey,
             publicKey,
-            address,
+            address: WG_DEFAULT_ADDRESS.replace('x', '1'),
             jc: JC,
             jmin: JMIN,
             jmax: JMAX,
@@ -71,16 +82,14 @@ module.exports = class WireGuard {
             h1: H1,
             h2: H2,
             h3: H3,
-            h4: H4,
+            h4: H4
           },
-          clients: {},
+          clients: {}
         };
         debug('Configuration generated.');
       }
-
       return config;
     });
-
     return this.__configPromise;
   }
 
