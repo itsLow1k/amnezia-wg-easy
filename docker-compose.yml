@@ -1,5 +1,5 @@
 volumes:
-  etc_wireguard:
+  amnezia-wg-easy:
 
 services:
   amnezia-wg-easy:
@@ -8,7 +8,8 @@ services:
     image: ghcr.io/itslow1k/amnezia-wg-easy
     container_name: amnezia-wg-easy
     volumes:
-      - etc_wireguard:/etc/wireguard
+      - amnezia-wg-easy:/etc/wireguard
+      - amnezia-wg-easy:/etc/amnezia/amneziawg
     ports:
       - "${WG_PORT}:${WG_PORT}/udp"
       - "${PORT}:${PORT}/tcp"
